@@ -202,7 +202,7 @@ function App() {
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div>
-        <Header logOut={logOut} userData={userData} />
+        <Header logOut={logOut}/>
         <Routes>
           <Route
             path="/"
@@ -217,7 +217,6 @@ function App() {
                 onCardLike={handleCardLike}
                 onCardDelete={handleCardDelete}
                 cards={cards}
-                userData={userData}
                 logOut={logOut}
               />}
           />
