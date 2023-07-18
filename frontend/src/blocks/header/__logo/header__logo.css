@@ -1,0 +1,15 @@
+.header__logo {
+    width: 103.74px;
+    height: 24.4px;
+    margin: 0 0 31.6px 27px;
+
+}
+
+@media (min-width: 768px) {
+    .header__logo {
+        margin: 0;
+        width: 142px;
+        height: 33px;
+        margin-bottom: 41px;
+    }
+}

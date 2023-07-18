@@ -1,0 +1,7 @@
+.gallery__element {
+    display: flex;
+    flex-direction: column;
+    max-width: 282px;
+    padding: 0;
+    position: relative;
+}

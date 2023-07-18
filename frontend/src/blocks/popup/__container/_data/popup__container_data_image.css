@@ -1,0 +1,7 @@
+.popup__container_data_image{
+    max-width: initial;
+    position: relative;
+    width: auto;
+    padding: 0;
+    background-color: rgba(0, 0, 0, 0.1);
+}

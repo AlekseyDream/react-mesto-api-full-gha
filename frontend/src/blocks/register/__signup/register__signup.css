@@ -1,0 +1,10 @@
+.register__signup {
+    display: flex;
+    align-items: center;
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+    line-height: 17px;
+    font-weight: 400;
+    margin: 0;
+  }

@@ -1,0 +1,20 @@
+.gallery__button-like {
+    background-color: transparent;
+    background-image: url(../../../images/logo-like.svg);
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: none;
+    cursor: pointer;
+    display: block;
+    flex-shrink: 0;
+    height: 19px;
+    margin-bottom: 3px;
+    transition: opacity .3s linear;
+    width: 22px;
+}
+
+.gallery__button-like:hover {
+    opacity: 0.5;
+  }
+  

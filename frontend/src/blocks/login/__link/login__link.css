@@ -1,0 +1,14 @@
+.login__link {
+    color: rgb(255, 255, 255, 0.6);
+    text-align: center;
+    font-size: 14px;
+    line-height: 17px;
+    font-weight: 400;
+    text-decoration: none;
+    margin: 0;
+    padding: 0 0 0 5px;
+  }
+  
+  .login__link:hover {
+    color: rgb(255, 255, 255);
+  }

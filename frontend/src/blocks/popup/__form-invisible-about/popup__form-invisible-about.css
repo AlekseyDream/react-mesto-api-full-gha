@@ -1,0 +1,5 @@
+.popup__form-invisible-about {
+    margin: 0;
+    min-height: 45px;
+    opacity: 0;
+}
