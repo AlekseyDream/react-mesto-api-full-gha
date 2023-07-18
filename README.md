@@ -9,8 +9,8 @@
 
 ## Ссылки на проект
 
-IP-адрес x.x.x.x
+IP-адрес 51.250.70.43
 
-Frontend https://...
+Frontend http://dream.mesto.nomoredomains.xyz
 
-Backend https://...
+Backend http://api.dream.mesto.nomoredomains.xyz
