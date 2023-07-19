@@ -1,5 +1,5 @@
 {
-  "name": "backend",
+  "name": "express-mesto-gha",
   "version": "1.0.0",
   "description": "# Проект Mesto фронтенд + бэкенд",
   "main": "app.js",
@@ -16,7 +16,7 @@
     "eslint-plugin-import": "^2.27.5",
     "nodemon": "^2.0.22"
   },
-  "dependnpm install dotenv --saveencies": {
+  "dependencies": {
     "bcryptjs": "^2.4.3",
     "celebrate": "^15.0.1",
     "cors": "^2.8.5",
