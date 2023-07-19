@@ -1,4 +1,4 @@
-export const BASE_URL = "https://dream.mesto.nomoredomains.xyz";
+export const BASE_URL = "https://api.dream.mesto.nomoredomains.xyz";
 
 const makeRequest = (url, method, body, token) => {
   const options = {
