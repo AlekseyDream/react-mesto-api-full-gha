@@ -14,7 +14,6 @@ import EditAvatarPopup from "./EditAvatarPopup.js";
 import AddPlacePopup from "./AddPlacePopup.js";
 import InfoTooltip from "../components/InfoTooltip";
 import ProtectedRouteElement from "./ProtectedRoute";
-import * as auth from "../utils/auth";
 
 
 function App() {
@@ -57,7 +56,7 @@ function App() {
     if (!token || isLoggedIn) {
       return;
     }
-    auth
+    api
       .getContent(token)
       .then((user) => {
         setUserData(user.data);
@@ -94,7 +93,7 @@ function App() {
   }
 
   const registerUser = (email, password) => {
-    auth
+    api
       .register(email, password)
       .then(() => {
         setIsOpenInfoTooltip(true);
@@ -118,7 +117,7 @@ function App() {
   };
 
   const loginUser = (email, password) => {
-    auth
+    api
       .authorize(email, password)
       .then((res) => {
         setToken(res.token);
@@ -202,7 +201,7 @@ function App() {
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div>
-        <Header logOut={logOut}/>
+        <Header logOut={logOut} userData={userData} />
         <Routes>
           <Route
             path="/"
@@ -217,6 +216,7 @@ function App() {
                 onCardLike={handleCardLike}
                 onCardDelete={handleCardDelete}
                 cards={cards}
+                userData={userData}
                 logOut={logOut}
               />}
           />
