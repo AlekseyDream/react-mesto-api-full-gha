@@ -9,7 +9,7 @@
 
 ## Ссылки на проект
 
-IP-адрес 51.250.70.43
+IP-адрес <51.250.70.43>
 
 Frontend http://dream.mesto.nomoredomains.xyz
 
