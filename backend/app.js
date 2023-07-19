@@ -1,8 +1,8 @@
+const express = require('express');
 // eslint-disable-next-line import/no-extraneous-dependencies
 require('dotenv').config();
 // eslint-disable-next-line import/no-extraneous-dependencies
 const cors = require('cors');
-const express = require('express');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
 const { errors } = require('celebrate');
