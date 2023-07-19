@@ -5,12 +5,12 @@
   
 Пожалуйста, прикрепите в это описание ссылку на сайт, размещенный на Яндекс.Облаке.
 
-Адрес репозитория: https://github.com/...
+Адрес репозитория: https://github.com/AlekseyDream/react-mesto-api-full-gha
 
 ## Ссылки на проект
 
 IP 51.250.70.43
 
-Frontend http://dream.mesto.nomoredomains.xyz
+Frontend https://dream.mesto.nomoredomains.xyz
 
-Backend http://api.dream.mesto.nomoredomains.xyz
+Backend https://api.dream.mesto.nomoredomains.xyz
