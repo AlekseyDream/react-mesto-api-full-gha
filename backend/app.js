@@ -1,3 +1,5 @@
+require('dotenv').config();
+const cors = require('cors');
 const express = require('express');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
@@ -11,6 +13,7 @@ const { signinValidate, signupValidate } = require('./middlewares/validation');
 const { PORT = 3000 } = process.env;
 mongoose.connect('mongodb://0.0.0.0:27017/mestodb');
 const app = express();
+app.use(cors());
 app.use(express.json());
 app.use(helmet());
 app.use(requestLogger);
