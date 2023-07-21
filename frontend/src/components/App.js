@@ -62,7 +62,7 @@ function App() {
       .getUserInfo()
       .then(() => {
         setIsLoggedIn(true);
-        navigate("/");
+        navigate('/');
       })
       .catch((err) => {
         console.log(err);
@@ -98,9 +98,9 @@ function App() {
       .loginUser(loginData)
       .then((res) => {
         setToken(res.token);
-        localStorage.setItem("jwt", res.token);
+        localStorage.setItem('jwt', res.token);
 
-        navigate("/");
+        navigate('/');
       })
       .catch((err) => {
         console.log(err);
@@ -109,11 +109,11 @@ function App() {
   };
 
   const logOut = () => {
-    localStorage.removeItem("jwt");
+    localStorage.removeItem('jwt');
     setIsLoggedIn(false);
-    setToken("");
+    setToken('');
     setCurrentUser({});
-    navigate("/sign-in");
+    navigate('/sign-in');
   };
 
   const handleCardLike = (card) => {
@@ -205,7 +205,7 @@ function App() {
         <Header logOut={logOut} />
         <Routes>
           <Route
-            path="/"
+            path='/'
             element={
               <ProtectedRouteElement
                 loggedIn={isLoggedIn}
@@ -221,17 +221,17 @@ function App() {
               />}
           />
           <Route
-            path="/*"
+            path='/*'
             element={
               isLoggedIn ? (
-                <Navigate to="/" replace />
+                <Navigate to='/' replace />
               ) : (
-                <Navigate to="/sign-in" replace />
+                <Navigate to='/sign-in' replace />
               )
             }
           />
           <Route
-            path="/sign-up"
+            path='/sign-up'
             element={
               <Register
                 isloggedIn={isLoggedIn}
@@ -243,7 +243,7 @@ function App() {
             }
           />
           <Route
-            path="/sign-in"
+            path='/sign-in'
             element={
               <Login
                 isloggedIn={isLoggedIn}
@@ -285,7 +285,7 @@ function App() {
           isRegister={isRegister}
           isOpen={isOpenInfoTooltip}
           onClose={closeAllPopups}
-          alt={"Статус"}
+          alt={'Статус'}
         />
       </div>
     </CurrentUserContext.Provider>
