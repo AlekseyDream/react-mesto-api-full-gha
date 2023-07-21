@@ -17,7 +17,6 @@ import EditProfilePopup from './EditProfilePopup.js';
 import EditAvatarPopup from './EditAvatarPopup.js';
 import AddPlacePopup from './AddPlacePopup.js';
 import ProtectedRouteElement from './ProtectedRoute';
-import * as auth from '../utils/auth';
 
 function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
@@ -29,7 +28,6 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [token, setToken] = useState('');
   const [loginError, setLoginError] = useState('');
-  const [userData, setUserData] = useState({});
   const [isRegister, setIsRegister] = useState({
     status: '',
     message: '',
@@ -51,17 +49,17 @@ function App() {
   }, [isLoggedIn]);
 
   useEffect(() => {
-    setToken();
+    const jwt = localStorage.getItem('jwt');
+    setToken(jwt);
   }, [token]);
 
   useEffect(() => {
     if (!token || isLoggedIn) {
       return;
     }
-    auth
-      .getContent(token)
-      .then((user) => {
-        setUserData(user.data);
+   api
+      .getContent()
+      .then(() => {
         setIsLoggedIn(true);
         navigate("/");
       })
@@ -94,9 +92,9 @@ function App() {
     setIsOpenInfoTooltip(false);
   }
 
-  const registerUser = (email, password) => {
-    auth
-      .register(email, password)
+  const registerUser = (userData) => {
+    api
+      .register(userData)
       .then(() => {
         setIsOpenInfoTooltip(true);
         setIsRegister({
@@ -118,9 +116,9 @@ function App() {
       });
   };
 
-  const loginUser = (email, password) => {
-    auth
-      .authorize(email, password)
+  const loginUser = (loginData) => {
+    api
+    .loginUser(loginData)
       .then((res) => {
         setToken(res.token);
         localStorage.setItem("jwt", res.token);
@@ -137,7 +135,7 @@ function App() {
     localStorage.removeItem("jwt");
     setIsLoggedIn(false);
     setToken("");
-    setUserData({});
+    setCurrentUser({});
     navigate("/sign-in");
   };
 
@@ -203,7 +201,7 @@ function App() {
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div>
-        <Header logOut={logOut} userData={userData} />
+        <Header logOut={logOut}/>
         <Routes>
           <Route
             path="/"
@@ -218,7 +216,6 @@ function App() {
                 onCardLike={handleCardLike}
                 onCardDelete={handleCardDelete}
                 cards={cards}
-                userData={userData}
                 logOut={logOut}
               />}
           />
