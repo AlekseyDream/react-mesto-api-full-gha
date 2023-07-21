@@ -57,8 +57,9 @@ function App() {
     if (!token || isLoggedIn) {
       return;
     }
-   api
-      .getContent()
+    api.setAuthHeaders(token);
+    api
+      .getUserInfo()
       .then(() => {
         setIsLoggedIn(true);
         navigate("/");
@@ -68,33 +69,9 @@ function App() {
       });
   }, [token, isLoggedIn, navigate]);
 
-  function handleEditProfileClick() {
-    setIsEditProfilePopupOpen(true);
-  }
-
-  function handleAddPlaceClick() {
-    setIsAddPlacePopupOpen(true);
-  }
-
-  function handleEditAvatarClick() {
-    setIsEditAvatarPopupOpen(true);
-  }
-
-  function handleCardClick(card) {
-    setSelectedCard(card);
-  }
-
-  function closeAllPopups() {
-    setIsEditProfilePopupOpen(false);
-    setIsAddPlacePopupOpen(false);
-    setIsEditAvatarPopupOpen(false);
-    setSelectedCard(null);
-    setIsOpenInfoTooltip(false);
-  }
-
   const registerUser = (userData) => {
     api
-      .register(userData)
+      .registerUser(userData)
       .then(() => {
         setIsOpenInfoTooltip(true);
         setIsRegister({
@@ -118,7 +95,7 @@ function App() {
 
   const loginUser = (loginData) => {
     api
-    .loginUser(loginData)
+      .loginUser(loginData)
       .then((res) => {
         setToken(res.token);
         localStorage.setItem("jwt", res.token);
@@ -176,7 +153,7 @@ function App() {
 
   const handleUpdateAvatar = (item) => {
     api
-      .updateAvatar(item)
+      .updateUserAvatar(item)
       .then((user) => {
         setCurrentUser(user);
         closeAllPopups();
@@ -198,10 +175,34 @@ function App() {
       });
   }
 
+  function handleEditProfileClick() {
+    setIsEditProfilePopupOpen(true);
+  }
+
+  function handleAddPlaceClick() {
+    setIsAddPlacePopupOpen(true);
+  }
+
+  function handleEditAvatarClick() {
+    setIsEditAvatarPopupOpen(true);
+  }
+
+  function handleCardClick(card) {
+    setSelectedCard(card);
+  }
+
+  function closeAllPopups() {
+    setIsEditProfilePopupOpen(false);
+    setIsAddPlacePopupOpen(false);
+    setIsEditAvatarPopupOpen(false);
+    setSelectedCard(null);
+    setIsOpenInfoTooltip(false);
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div>
-        <Header logOut={logOut}/>
+        <Header logOut={logOut} />
         <Routes>
           <Route
             path="/"
@@ -280,7 +281,7 @@ function App() {
           card={selectedCard}
           onClose={closeAllPopups}
         />
-         <InfoTooltip
+        <InfoTooltip
           isRegister={isRegister}
           isOpen={isOpenInfoTooltip}
           onClose={closeAllPopups}
