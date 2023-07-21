@@ -3,6 +3,7 @@ import { Routes, Route, Link } from "react-router-dom";
 import logo from "../images/header-logo.svg";
 
  function Header({ userData, logOut }) {
+  const currentUser = React.createContext({});
   return (
     <header className="header">
       <img
@@ -31,7 +32,7 @@ import logo from "../images/header-logo.svg";
           path="/"
           element={
             <div className="header__user">
-              <p className="header__email" >{userData.email}</p>
+              <p className="header__email" >{currentUser.email}</p>
               <button className="header__button" onClick={logOut}>
                 Выйти
               </button>
