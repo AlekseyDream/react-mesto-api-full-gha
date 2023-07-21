@@ -1,20 +1,23 @@
-import React, { useState, useEffect } from "react";
-import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
-import Header from "./Header.js";
-import Main from "./Main.js";
-import Footer from "./Footer.js";
-import Login from "./Login.js";
-import Register from "./Register.js";
-import PopupWithForm from "./PopupWithForm.js";
-import ImagePopup from "./ImagePopup.js";
-import api from "../utils/Api.js";
-import CurrentUserContext from "../contexts/CurrentUserContext.js";
-import EditProfilePopup from "./EditProfilePopup.js";
-import EditAvatarPopup from "./EditAvatarPopup.js";
-import AddPlacePopup from "./AddPlacePopup.js";
-import InfoTooltip from "../components/InfoTooltip";
-import ProtectedRouteElement from "./ProtectedRoute";
+import React, { useState, useEffect } from 'react';
+import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 
+import Header from './Header.js';
+import Main from './Main.js';
+import Footer from './Footer.js';
+import Login from './Login.js';
+import Register from './Register.js';
+
+import PopupWithForm from './PopupWithForm.js';
+import ImagePopup from './ImagePopup.js';
+import InfoTooltip from '../components/InfoTooltip';
+
+import api from '../utils/Api.js';
+import CurrentUserContext from '../contexts/CurrentUserContext.js';
+import EditProfilePopup from './EditProfilePopup.js';
+import EditAvatarPopup from './EditAvatarPopup.js';
+import AddPlacePopup from './AddPlacePopup.js';
+import ProtectedRouteElement from './ProtectedRoute';
+import * as auth from '../utils/auth';
 
 function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
@@ -24,12 +27,12 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [token, setToken] = useState("");
-  const [loginError, setLoginError] = useState("");
+  const [token, setToken] = useState('');
+  const [loginError, setLoginError] = useState('');
   const [userData, setUserData] = useState({});
   const [isRegister, setIsRegister] = useState({
-    status: "",
-    message: "",
+    status: '',
+    message: '',
   });
   const [isOpenInfoTooltip, setIsOpenInfoTooltip] = useState(false);
   const navigate = useNavigate();
@@ -48,15 +51,14 @@ function App() {
   }, [isLoggedIn]);
 
   useEffect(() => {
-    const jwt = localStorage.getItem("jwt");
-    setToken(jwt);
+    setToken();
   }, [token]);
 
   useEffect(() => {
     if (!token || isLoggedIn) {
       return;
     }
-    api
+    auth
       .getContent(token)
       .then((user) => {
         setUserData(user.data);
@@ -93,7 +95,7 @@ function App() {
   }
 
   const registerUser = (email, password) => {
-    api
+    auth
       .register(email, password)
       .then(() => {
         setIsOpenInfoTooltip(true);
@@ -117,7 +119,7 @@ function App() {
   };
 
   const loginUser = (email, password) => {
-    api
+    auth
       .authorize(email, password)
       .then((res) => {
         setToken(res.token);

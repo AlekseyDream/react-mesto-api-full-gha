@@ -9,7 +9,7 @@
 
 ## Ссылки на проект
 
-IP 51.250.70.43
+IP 158.160.109.65
 
 Frontend https://dream.mesto.nomoredomains.xyz
 

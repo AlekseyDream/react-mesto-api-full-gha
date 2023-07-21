@@ -88,10 +88,7 @@ class Api {
   }
 
   const api = new Api ({
-    url: "https://api.dream.mesto.nomoredomains.xyz",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    url: "localhost:4000",
   });
 
   export default api;

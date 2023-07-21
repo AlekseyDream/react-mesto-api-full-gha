@@ -13,8 +13,12 @@ module.exports = (req, res, next) => {
 
   const token = authorization.replace('Bearer ', '');
   let payload;
+
   try {
-    payload = jwt.verify(token, NODE_ENV === 'production' ? JWT_SECRET : 'super-secret-key');
+    payload = jwt.verify(
+      token,
+      NODE_ENV === 'production' ? JWT_SECRET : 'super-secret-key',
+    );
   } catch (err) {
     next(new UnauthorizedError('Неправильные почта или пароль'));
     return;
