@@ -13,15 +13,17 @@ const { signinValidate, signupValidate } = require('./middlewares/validation');
 const { PORT = 4000 } = process.env;
 mongoose.connect('mongodb://0.0.0.0:27017/mestodb');
 const app = express();
-app.use(cors({ origin: 'http://localhost:3000' }));
+app.use(cors());
 app.use(express.json());
 app.use(helmet());
 app.use(requestLogger);
+
 app.get('/crash-test', () => {
   setTimeout(() => {
     throw new Error('Сервер сейчас упадёт');
   }, 0);
 });
+
 app.post('/signup', signupValidate, createUser);
 app.post('/signin', signinValidate, login);
 app.use(auth);
