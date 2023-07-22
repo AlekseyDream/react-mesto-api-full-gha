@@ -78,8 +78,8 @@ function App() {
           status: true,
           message: "Вы успешно зарегистрировались!",
         });
-        navigate("/");
-        navigate("/sign-in", { replace: true });
+        navigate('/');
+        navigate('/sign-in', { replace: true });
       })
       .catch((err) => {
         setIsOpenInfoTooltip(true);
