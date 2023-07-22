@@ -1,95 +1,66 @@
 class Api {
-  constructor(apiParameters) {
-    this._url = apiParameters.url;
-    this._headers = apiParameters.headers;
+  #url;
+  #headers;
+  #authHeaders;
+  constructor({ url, headers }) {
+    this.#url = url;
+    this.#headers = headers;
+    this.#authHeaders = null;
   }
+  deleteAuthHeaders = () => (this.#authHeaders = null);
 
-  _handleResponse(res) {
-    if (res.ok) {
-      return res.json();
-    }
-    else {
-      return Promise.reject(`код ошибки: ${res.status}`);
-    }
-  }
+  setAuthHeaders = (token) => {
+    this.#authHeaders = {
+      ...this.#headers,
+      authorization: `Bearer ${token}`,
+    };
+  };
 
-  getUserInfo() {
-    return fetch(`${this._url}/users/me`, {
-      headers: this._headers
-    })
-      .then(res => { return this._handleResponse(res); })
-  }
+  #handleReply = (res) =>
+    res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
 
-  getAllCards() {
-    return fetch(`${this._url}/cards`, {
-      headers: this._headers
-    })
-      .then(res => { return this._handleResponse(res); })
-  }
+  #makeRequest = (method, path, body, notSave) => {
+    const reqOptions = {
+      method: method,
+      headers: notSave ? this.#headers : this.#authHeaders,
+    };
+    if (body) reqOptions.body = JSON.stringify(body);
 
-  updateUserInfo(data) {
-    return fetch(`${this._url}/users/me`, {
-      method: "PATCH",
-      headers: this._headers,
-      body: JSON.stringify({ name: data.name, about: data.about }),
-    })
-      .then(res => { return this._handleResponse(res); })
-  }
+    return fetch(`${this.#url}${path}`, reqOptions).then(this.#handleReply);
+  };
 
-  addNewCard({ name, link }) {
-    return fetch(`${this._url}/cards`, {
-      method: "POST",
-      headers: this._headers,
-      body: JSON.stringify({ name, link }),
-    })
-      .then(res => { return this._handleResponse(res); })
-  }
+  registerUser = (regData) =>
+    this.#makeRequest('POST', '/signup', regData, 'notSave');
 
-  deleteCard(Id) {
-    return fetch(`${this._url}/cards/${Id}`, {
-      method: "DELETE",
-      headers: this._headers,
-    })
-      .then(res => { return this._handleResponse(res); })
-  }
+  loginUser = (loginData) =>
+    this.#makeRequest('POST', '/signin', loginData, 'notSave');
 
-  setCardLike(Id) {
-    return fetch(`${this._url}/cards/${Id}/likes`, {
-      method: "PUT",
-      headers: this._headers,
-    })
-      .then(res => { return this._handleResponse(res); })
-  }
+  getUserInfo = () => this.#makeRequest('GET', '/users/me');
 
-  deleteCardLike(Id) {
-    return fetch(`${this._url}/cards/${Id}/likes`, {
-      method: "DELETE",
-      headers: this._headers,
-    })
-      .then(res => { return this._handleResponse(res); })
-  }
+  getAllCards = () => this.#makeRequest('GET', '/cards');
 
-  updateAvatar(data) {
-    return fetch(`${this._url}/users/me/avatar`, {
-      method: "PATCH",
-      headers: this._headers,
-      body: JSON.stringify(data),
-    })
-      .then(res => { return this._handleResponse(res); })
-  }
+  updateUserInfo = (userData) =>
+    this.#makeRequest('PATCH', '/users/me', userData);
 
-  changeLikeCardStatus(id, isLiked) {
-    if (isLiked) {
-      return this.setCardLike(id);
-    } else {
-      return this.deleteCardLike(id);
-    }
-  }
+  updateUserAvatar = (userData) =>
+    this.#makeRequest('PATCH', '/users/me/avatar', userData);
+
+  addNewCard = (cardData) => this.#makeRequest('POST', '/cards', cardData);
+
+  deleteCard = (id) => this.#makeRequest('DELETE', `/cards/${id}`);
+
+  changeLikeCardStatus = (id, isLiked) => {
+    const fetchMethod = isLiked ? 'PUT' : 'DELETE';
+    return this.#makeRequest(fetchMethod, `/cards/${id}/likes`);
+  };
 }
 
 const api = new Api({
   url: "https://api.dream.mesto.nomoredomains.xyz",
   // url: "http://localhost:4000",
+  headers: {
+    'Content-Type': 'application/json',
+  },
 });
 
 export default api;
