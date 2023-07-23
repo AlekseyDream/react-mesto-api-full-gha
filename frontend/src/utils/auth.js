@@ -1,5 +1,5 @@
-export const BASE_URL = "https://api.dream.mesto.nomoredomains.xyz";
-//export const BASE_URL = "http://localhost:4000";
+//export const BASE_URL = "https://api.dream.mesto.nomoredomains.xyz";
+export const BASE_URL = "http://localhost:4000";
 const makeRequest = (url, method, body, token) => {
   const options = {
     method: method,

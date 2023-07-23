@@ -150,8 +150,10 @@ function App() {
         const isLiked = card.likes.some(like => like === currentUser._id);
         api
             .changeLikeCardStatus(card._id, !isLiked)
+            
             .then(newCard =>
                 setCards(state => state.map(c => c._id === card._id ? newCard : c)))
+               // console.log(card._id)
             .catch((err) => {
                 console.log(err);
             });
@@ -161,7 +163,7 @@ function App() {
         api
             .deleteCard(card._id)
             .then(() => {
-                setCards((cards) => cards.filter((item) => item._id !== card._id));
+                setCards(state => state.filter(c => c._id !== card._id));
             })
             .catch((err) => {
                 console.log(err);

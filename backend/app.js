@@ -10,7 +10,7 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { createUser, login } = require('./controllers/users');
 const { signinValidate, signupValidate } = require('./middlewares/validation');
 
-const { PORT = 3000 } = process.env;
+const { PORT = 4000 } = process.env;
 mongoose.connect('mongodb://0.0.0.0:27017/mestodb');
 const app = express();
 app.use(cors());

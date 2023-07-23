@@ -62,10 +62,12 @@ const likeCard = (req, res, next) => {
     { [likeMethod]: { likes: req.user._id } },
     { new: true },
   )
-    .orFail(() => {
-      throw new NotFoundError('Карточка не найдена');
+    .then((card) => {
+      if (!card) {
+        throw new NotFoundError('Карточка не найдена');
+      }
+      return res.send(card);
     })
-    .then((card) => res.send({ data: card }))
     .catch((err) => {
       if (err instanceof mongoose.Error.CastError) {
         return next(
