@@ -25,8 +25,10 @@ function App() {
   const [selectedCard, setSelectedCard] = useState(null);
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
+
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [token, setToken] = useState('');
+  const [email, setEmail] = useState(null);
   const [loginError, setLoginError] = useState('');
   const [isRegister, setIsRegister] = useState({
     status: '',
@@ -60,7 +62,8 @@ function App() {
     api.setAuthHeaders(token);
     api
       .getUserInfo()
-      .then(() => {
+      .then((res) => {
+        setEmail(res.data.email)
         setIsLoggedIn(true);
         navigate('/');
       })
@@ -97,13 +100,16 @@ function App() {
     api
       .loginUser(loginData)
       .then((res) => {
+        setEmail(email);
         setToken(res.token);
         localStorage.setItem('jwt', res.token);
+
 
         navigate('/');
       })
       .catch((err) => {
         console.log(err);
+        setIsOpenInfoTooltip(true);
         setLoginError("Что-то пошло не так! Попробуйте ещё раз.");
       });
   };
@@ -118,15 +124,18 @@ function App() {
 
   const handleCardLike = (card) => {
     const isLiked = card.likes.some((like) => like._id === currentUser._id);
+
     api
       .changeLikeCardStatus(card._id, !isLiked)
       .then((newCard) => {
-        setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+        setCards((state) =>
+          state.map((c) => (c._id === card._id ? newCard : c))
+        );
       })
       .catch((err) => {
         console.log(err);
       });
-  }
+  };
 
   const handleCardDelete = (card) => {
     api
@@ -137,7 +146,7 @@ function App() {
       .catch((err) => {
         console.log(err);
       });
-  }
+  };
 
   const handleUpdateUser = (items) => {
     api
@@ -149,7 +158,7 @@ function App() {
       .catch((err) => {
         console.log(err);
       });
-  }
+  };
 
   const handleUpdateAvatar = (item) => {
     api
@@ -161,7 +170,7 @@ function App() {
       .catch((err) => {
         console.log(err);
       });
-  }
+  };
 
   const handleAddPlaceSubmit = (items) => {
     api
@@ -173,7 +182,7 @@ function App() {
       .catch((err) => {
         console.log(err);
       });
-  }
+  };
 
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true);
