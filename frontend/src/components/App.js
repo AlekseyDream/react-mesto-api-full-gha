@@ -28,7 +28,6 @@ function App() {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [token, setToken] = useState('');
-  const [email, setEmail] = useState(null);
   const [loginError, setLoginError] = useState({
     status: '',
     message: '',
@@ -45,7 +44,7 @@ function App() {
       Promise.all([api.getUserInfo(), api.getAllCards()])
         .then(([user, cards]) => {
           setCurrentUser(user);
-          setCards(cards);
+          setCards(cards.reverse());
         })
         .catch((err) => {
           console.log(err);
@@ -65,8 +64,7 @@ function App() {
     api.setAuthHeaders(token);
     api
       .getUserInfo()
-      .then((res) => {
-        setEmail(res.data.email)
+      .then(() => {
         setIsLoggedIn(true);
         navigate('/');
       })
@@ -101,11 +99,8 @@ function App() {
     api
       .loginUser(loginData)
       .then((res) => {
-        setEmail(email);
         setToken(res.token);
         localStorage.setItem('jwt', res.token);
-
-
         navigate('/');
       })
       .catch((err) => {
