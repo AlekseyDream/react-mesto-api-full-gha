@@ -56,8 +56,8 @@ class Api {
 }
 
 const api = new Api({
-  //url: "https://api.dream.mesto.nomoredomains.xyz",
-  url: "http://localhost:4000",
+  url: "https://api.dream.mesto.nomoredomains.xyz",
+  //url: "http://localhost:4000",
   headers: {
     'Content-Type': 'application/json',
   },
